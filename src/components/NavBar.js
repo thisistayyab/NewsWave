@@ -25,11 +25,11 @@ const NavBar = ()=>{
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {/* <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to="/home">
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/">
                     Home
                   </Link>
-                </li> */}
+                </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/business">
                     Business
@@ -66,6 +66,14 @@ const NavBar = ()=>{
                   </Link>
                 </li>
               </ul>
+            </div>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
             </div>
           </div>
         </nav>
