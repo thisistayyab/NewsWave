@@ -4,6 +4,7 @@ export class About extends Component {
   render() {
     return (
       <>
+      <div style={{marginTop:"76px"}}></div>
         <div class="accordion container my-5" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header">

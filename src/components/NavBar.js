@@ -67,14 +67,6 @@ const NavBar = ()=>{
                 </li>
               </ul>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-            </div>
           </div>
         </nav>
       </>
