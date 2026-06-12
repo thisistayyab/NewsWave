@@ -38,7 +38,7 @@ Create a local environment file:
 cp .env.example .env
 ```
 
-Add your GNews API key:
+Add your GNews API key for local development:
 
 ```env
 REACT_APP_GNEWS_API_KEY=your_gnews_api_key_here
@@ -74,7 +74,15 @@ Runs the test watcher.
 
 ## API Notes
 
-The app uses `REACT_APP_GNEWS_API_KEY` for live headlines. Without this key, NewsWave still works by showing saved fallback headlines from `src/data/newsFallback.json`.
+The app uses `REACT_APP_GNEWS_API_KEY` only for local development on `localhost`.
+
+On production, the browser calls the Netlify function at `/.netlify/functions/news`. Add this environment variable in Netlify:
+
+```env
+GNEWS_API_KEY=your_gnews_api_key_here
+```
+
+This keeps the GNews key out of the public JavaScript bundle and avoids browser-side request failures. Without an API key, NewsWave still works by showing saved fallback headlines from `src/data/newsFallback.json`.
 
 GNews can rate-limit requests if too many calls are made in a short time. To reduce that problem, NewsWave caches API responses for 10 minutes and uses a manual `Load More` button instead of automatic infinite scrolling.
 
@@ -86,7 +94,7 @@ Build the app:
 npm run build
 ```
 
-Deploy the generated `build` folder to your hosting provider.
+Deploy the generated `build` folder to your hosting provider. On Netlify, also deploy the `netlify/functions/news.js` function and set `GNEWS_API_KEY` in Site settings > Environment variables.
 
 The app currently uses hash routes like:
 

@@ -5,6 +5,9 @@ import PropTypes from "prop-types";
 import fallbackNews from "../data/newsFallback.json";
 
 const API_KEY = process.env.REACT_APP_GNEWS_API_KEY;
+const NEWS_API_BASE_URL = process.env.REACT_APP_NEWS_API_BASE_URL;
+const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const useDirectGNews = isLocalHost && API_KEY;
 const MAX_API_PAGES = 2;
 const CACHE_PREFIX = "newswave:gnews:";
 const CACHE_TTL = 10 * 60 * 1000;
@@ -101,8 +104,23 @@ const News = (props) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  const buildUrl = (pageNumber) =>
-    `https://gnews.io/api/v4/top-headlines?lang=en&country=${props.country}&topic=${props.category}&token=${API_KEY}&max=${props.pageSize}&page=${pageNumber}`;
+  const buildUrl = (pageNumber) => {
+    const params = new URLSearchParams({
+      lang: "en",
+      country: props.country,
+      topic: props.category,
+      max: props.pageSize,
+      page: pageNumber,
+    });
+
+    if (useDirectGNews) {
+      params.set("token", API_KEY);
+      return `https://gnews.io/api/v4/top-headlines?${params.toString()}`;
+    }
+
+    const baseUrl = NEWS_API_BASE_URL || "/.netlify/functions/news";
+    return `${baseUrl}?${params.toString()}`;
+  };
 
   const showFallbackNews = (message) => {
     setApiError(message);
@@ -114,7 +132,7 @@ const News = (props) => {
     props.setProgress(10);
     setLoading(true);
 
-    if (!API_KEY) {
+    if (isLocalHost && !API_KEY && !NEWS_API_BASE_URL) {
       showFallbackNews("GNews API key is missing. Showing saved headlines instead.");
       setLoading(false);
       props.setProgress(100);
@@ -155,7 +173,7 @@ const News = (props) => {
   const fetchMoreData = async () => {
     const nextPage = page + 1;
 
-    if (!API_KEY || loadingMore || nextPage > MAX_API_PAGES) {
+    if ((isLocalHost && !API_KEY && !NEWS_API_BASE_URL) || loadingMore || nextPage > MAX_API_PAGES) {
       setHasMore(false);
       return;
     }
