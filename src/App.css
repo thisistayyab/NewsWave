@@ -28,6 +28,40 @@
   color: #61dafb;
 }
 
+.news-card {
+  overflow: hidden;
+}
+
+.news-card-img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.news-card-title,
+.news-card-description,
+.news-card-meta {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.news-card-title {
+  min-height: 81px;
+  line-height: 1.35;
+  -webkit-line-clamp: 3;
+}
+
+.news-card-description {
+  min-height: 72px;
+  line-height: 1.5;
+  -webkit-line-clamp: 3;
+}
+
+.news-card-meta {
+  min-height: 42px;
+  -webkit-line-clamp: 2;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -6,7 +6,7 @@ import News from './components/News';
 import About from './components/About';
 import LoadingBar from 'react-top-loading-bar'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
@@ -15,7 +15,7 @@ const App = (props)=> {
 
   const [progress, setprogress] = useState(0)
 
-  const setProgress = () => {
+  const setProgress = (progress) => {
     setprogress(progress)
   }
   const pagesize = 5
